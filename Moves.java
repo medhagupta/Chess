@@ -92,7 +92,7 @@ public class Moves {
 
            for (String position:Intermediate_Positions) {
                System.out.println(position);
-               if(isPiecePresent(position,ChessBoard))
+               if(isPiecePresent(position, ChessBoard))
                {
                    return false;
                }
@@ -107,7 +107,7 @@ public class Moves {
             String Position;
             for (int i = minimum + 1; i < maximum; i++) {
                 Position = start.charAt(0) + Integer.toString(i);
-                if (isPiecePresent(Position,ChessBoard)) {
+                if (isPiecePresent(Position, ChessBoard)) {
                     return false;
                 }
             }
@@ -116,6 +116,32 @@ public class Moves {
     }
 
 
+    private static boolean isInbetween(String start,Map<String,String> ChessBoard){
+        String Position;
+
+        if (start.charAt(1)=='2')
+        {
+            Position = start.charAt(0)+""+ ( Integer.toString( (Character.getNumericValue(start.charAt(1))) +1 ));
+            System.out.print(Position);
+            if(isPiecePresent(Position,ChessBoard))
+            {
+               return true;
+            }
+        }
+        else
+        {
+            Position = start.charAt(0)+""+ ( Integer.toString( (Character.getNumericValue(start.charAt(1))) - 1 ));
+
+            if (isPiecePresent(Position,ChessBoard))
+            {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
     public static boolean isValidPawnMove(String start,String end,Map<String,String> ChessBoard){
 
 
@@ -123,7 +149,7 @@ public class Moves {
         {
             if (Math.abs(start.charAt(1)-end.charAt(1)) == 2 )
             {
-                if(start.charAt(1)== '2' ||start.charAt(1)== '7')
+                if(!isInbetween(start, ChessBoard))
                 {
                     return true;
                 }
@@ -142,7 +168,7 @@ public class Moves {
             return false;
         }
 
-        if(isPiecePresent(end,ChessBoard))
+        if(isPiecePresent(end, ChessBoard))
         {   // cross move
             if(Math.abs(start.charAt(0)-end.charAt(0)) == 1)
                 return true;
@@ -180,7 +206,7 @@ public class Moves {
             chessBoard.put("Bw2","f1");
             chessBoard.put("Nw2","g1");
             chessBoard.put("Rw2","h1");
-            chessBoard.put("Pw1","b3");
+            chessBoard.put("Pw1","a2");
             chessBoard.put("Pw2","b2");
             chessBoard.put("Pw3","c2");
             chessBoard.put("Pw4","d2");
@@ -198,16 +224,15 @@ public class Moves {
             chessBoard.put("Nb2","g8");
             chessBoard.put("Rb2","h8");
             chessBoard.put("Pb1","a7");
-            chessBoard.put("Pb2","b7");
+            chessBoard.put("Pb2","e6");
             chessBoard.put("Pb3","c7");
             chessBoard.put("Pb4","d7");
             chessBoard.put("Pb5","e7");
-            chessBoard.put("Pb6","f7");
+            chessBoard.put("Pb6","c3");
             chessBoard.put("Pb7","g7");
             chessBoard.put("Pb8","h7");
 
-        System.out.print(isValidKightMove("b8","c6",chessBoard));
-
+        System.out.print(isValidPawnMove("e7", "e5", chessBoard));
 
 }
 
