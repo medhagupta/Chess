@@ -60,7 +60,7 @@ public class ChessBoard {
 				return;
 			}
 			else{
-				String initialPosition = findInitialPosition(finalPosition);
+				String initialPosition = findInitialPosition(finalPosition,colour);
 				boolean isPawn = finalPosition.length()==2;
 				boolean isKing = finalPosition.charAt(0)=='K';
 				boolean isQueen = finalPosition.charAt(0)=='Q';
@@ -111,11 +111,70 @@ public class ChessBoard {
 			}
 		}
 		
-		private String findInitialPosition(String finalPosition){
-			return "b1";
+		private String findInitialPosition(String finalPosition,char Colour){
+			String initialPosition;
+			boolean isPawn = finalPosition.length()==2;
+			boolean isQueen = finalPosition.charAt(0)=='Q';
+			boolean isKing = finalPosition.charAt(0)=='K';
+			boolean isBishop = finalPosition.charAt(0)=='B';
+			boolean isKnight = finalPosition.charAt(0)=='N';
+			boolean isRook = finalPosition.charAt(0)=='R';
+			String piece;
+			String position;
+			if(isPawn){
+				for(int i=1;i<9;i++){
+					piece = "P"+Colour+Integer.toString(i);
+					position = chessBoard.get(piece);
+					if(Moves.isValidPawnMove(position,finalPosition.substring(1))){
+						return position;
+					}
+				}	
+			}
+			
+			else {
+				for(int i =1; i<=2;i++){
+					piece = Character.toString(finalPosition.charAt(0))+Character.toString(Colour) + Integer.toString(i);
+					position = chessBoard.get(piece);
+					if(isBishop && Moves.isValidBishopMove(position, finalPosition.substring(1))){
+						return position;
+					}
+					if(isKnight && Moves.isValidKnightMove(position, finalPosition.substring(1))){
+						return position;
+					}
+					if(isRook && Moves.isValidRookMove(position, finalPosition.substring(1))){
+						return position;
+					}
+					
+					if(isKing && Moves.isValidKingMove(position,finalPosition.substring(1))){
+						return position;
+					}
+					
+				}
+				
+				if(isQueen ){
+					piece = Character.toString(finalPosition.charAt(0)) + Colour;
+					position = chessBoard.get(piece);
+					if(Moves.isValidQueenMove(position, finalPosition.substring(1))){
+						return position;
+					}
+				}
+				if(isKing){
+					piece = Character.toString(finalPosition.charAt(0)) + Colour;
+					position = chessBoard.get(piece);
+					if(Moves.isValidQueenMove(position, finalPosition.substring(1))){
+						return position;
+					}
+				}
+			}
+			
+			return null;
 		}
 		
 		
+		
+		/*private String findInitialPosition(String finalPosition,char Colour){
+			return "b1";
+		}*/
 		public static void main(String args[]){
 			ChessBoard chessBoard = new ChessBoard();
 			chessBoard.update("Nc3","Nc6");
