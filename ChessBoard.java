@@ -77,9 +77,46 @@ public class ChessBoard {
 			
 		}
 		
-		private void birth(String finalPosition,char colour){
+		/*private void birth(String finalPosition,char colour){
+			String position = finalPosition.substring(0, 2);
+			String positionOfPawn ="";
+			if(colour == 'w'){
+				positionOfPawn = position.substring(0, 1) + Integer.toString(Integer.parseInt(position.substring(1, 2))-1);
+			}
+			else{
+				positionOfPawn = position.substring(0, 1) + Integer.toString(Integer.parseInt(position.substring(1, 2))+1);
+			}
+			String piece = findPieceAtPosition(positionOfPawn);
+			String 
+			chessBoard.put(piece, position)
 			
+		}*/
+		
+		private void kingSideCasling(char colour){
+				String keyKing = "K"+colour;
+				String keyRook = "R"+colour+"2";
+				if(colour == 'w'){
+					chessBoard.put(keyKing,"g1");	
+					chessBoard.put(keyRook, "f1");
+				}
+				else{
+					chessBoard.put(keyKing,"g8");	
+					chessBoard.put(keyRook, "f8");
+				}
 		}
+		
+		private void queenSideCasling(char colour){
+			String keyKing = "K"+colour;
+			String keyRook = "R"+colour+"2";
+			if(colour == 'w'){
+				chessBoard.put(keyKing,"c1");	
+				chessBoard.put(keyRook, "d1");
+			}
+			else{
+				chessBoard.put(keyKing,"c8");	
+				chessBoard.put(keyRook, "d8");
+			}
+	}
 		
 		private String findPieceAtPosition(String position){
 			String x="";
@@ -100,10 +137,16 @@ public class ChessBoard {
 				return;
 			}
 			
-			if(finalPosition.contains("=")){
-				birth(finalPosition,colour);
+			if(finalPosition.equals("O-O")){
+				kingSideCasling(colour);
 				return;
 			}
+			
+			if(finalPosition.equals("O-O-O")){
+				queenSideCasling(colour);
+				return;
+			}
+		
 			
 			else{
 				String initialPosition = findInitialPosition(finalPosition,colour);
@@ -215,6 +258,7 @@ public class ChessBoard {
 			
 			return null;
 		}
+		
 		
 		
 		
