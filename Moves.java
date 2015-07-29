@@ -37,7 +37,7 @@ public class Moves {
             return true;
         }
 
-        return true;
+        return false;
     }
 
     public static boolean isvalidBishopMove(String start,String end, Map<String,String> ChessBoard){
@@ -118,7 +118,20 @@ public class Moves {
 
     public static boolean isValidPawnMove(String start,String end,Map<String,String> ChessBoard){
 
-        //System.out.print(Math.abs(start.charAt(0)-end.charAt(0)));
+
+        if (start.charAt(0)==end.charAt(0))
+        {
+            if (Math.abs(start.charAt(1)-end.charAt(1)) == 2 )
+            {
+                if(start.charAt(1)== '2' ||start.charAt(1)== '7')
+                {
+                    return true;
+                }
+            }
+
+        }
+
+
         if ( Math.abs(start.charAt(0)-end.charAt(0)) > 1 )
         {
             return false;
@@ -140,7 +153,6 @@ public class Moves {
             if (Math.abs(start.charAt(0) - end.charAt(0)) == 0)
                 return true;
         }
-        //System.out.print(Math.abs(start.charAt(0)-end.charAt(0)));
             return false;
     }
 
@@ -194,7 +206,7 @@ public class Moves {
             chessBoard.put("Pb7","g7");
             chessBoard.put("Pb8","h7");
 
-        System.out.print(isvalidRookMove("f5","a5",chessBoard));
+        System.out.print(isValidPawnMove("d3","f3",chessBoard));
 
 
 }
