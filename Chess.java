@@ -11,14 +11,13 @@ public class Chess {
             //String file = reader.nextLine();
             ChessBoard chessBoard = new ChessBoard();
             String file = "chessmoves.txt";
-            BufferedReader br = new BufferedReader(new FileReader(".\\src\\chess\\" + file));
+            BufferedReader br = new BufferedReader(new FileReader(".\\src\\" + file));
             String line = br.readLine();
-            System.out.println(line);
             String[] moves = line.replaceAll(" *\\d*[.] *" ," ").split(" ");
-            System.out.println(Arrays.toString(moves));
             for (int i=1; i<moves.length ;i+= 2){
                 if ( moves[i].matches(".*[a-zA-Z]+.*")) {
                     chessBoard.update(moves[i], moves[i+1]);
+					chessBoard.print();
                 }
             }
         }
