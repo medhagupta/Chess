@@ -10,7 +10,7 @@ public class Moves {
 
 
 
-    public static boolean isvalidQueenMove(String start,String end,Map<String,String> ChessBoard)
+    public static boolean isValidQueenMove(String start,String end,Map<String,String> ChessBoard)
     {
 
 
@@ -18,12 +18,12 @@ public class Moves {
     }
 
 
-    public static boolean isvalidKingMove(String s1,String s2,Map<String,String> ChessBoard)
+    public static boolean isValidKingMove(String s1,String s2,Map<String,String> ChessBoard)
     {
         return true;
     }
 
-    public static boolean isvalidKightMove(String start,String end,Map<String,String> ChessBoard)
+    public static boolean isValidKightMove(String start,String end,Map<String,String> ChessBoard)
     {
 
 
@@ -40,7 +40,7 @@ public class Moves {
         return false;
     }
 
-    public static boolean isvalidBishopMove(String start,String end, Map<String,String> ChessBoard){
+    public static boolean isValidBishopMove(String start,String end, Map<String,String> ChessBoard){
 
         // Camel
 
@@ -52,7 +52,7 @@ public class Moves {
         return false;
     }
 
-    public static ArrayList<String> findIntermediatePositions(String start,String end){
+    private static ArrayList<String> findIntermediatePositions(String start,String end){
 
         ArrayList<String> Positions=new ArrayList<String>();
 
@@ -75,7 +75,7 @@ public class Moves {
 
     }
 
-    public static boolean isvalidRookMove(String start,String end,Map<String,String> ChessBoard){
+    public static boolean isValidRookMove(String start,String end,Map<String,String> ChessBoard){
 
         // Elephant
 
@@ -92,7 +92,7 @@ public class Moves {
 
            for (String position:Intermediate_Positions) {
                System.out.println(position);
-               if(ispawnpresent(position,ChessBoard))
+               if(isPiecePresent(position,ChessBoard))
                {
                    return false;
                }
@@ -107,7 +107,7 @@ public class Moves {
             String Position;
             for (int i = minimum + 1; i < maximum; i++) {
                 Position = start.charAt(0) + Integer.toString(i);
-                if (ispawnpresent(Position,ChessBoard)) {
+                if (isPiecePresent(Position,ChessBoard)) {
                     return false;
                 }
             }
@@ -142,7 +142,7 @@ public class Moves {
             return false;
         }
 
-        if(ispawnpresent(end,ChessBoard))
+        if(isPiecePresent(end,ChessBoard))
         {   // cross move
             if(Math.abs(start.charAt(0)-end.charAt(0)) == 1)
                 return true;
@@ -156,7 +156,7 @@ public class Moves {
             return false;
     }
 
-    public static boolean ispawnpresent(String Position, Map<String,String> ChessBoard)
+    private static boolean isPiecePresent(String Position, Map<String,String> ChessBoard)
     {
 
         if ( ChessBoard.containsValue(Position))
@@ -165,7 +165,7 @@ public class Moves {
         }
         return false;
 
-       //return true;
+
     }
 
     public static void main(String args[]) {
@@ -206,7 +206,7 @@ public class Moves {
             chessBoard.put("Pb7","g7");
             chessBoard.put("Pb8","h7");
 
-        System.out.print(isValidPawnMove("d3","f3",chessBoard));
+        System.out.print(isValidKightMove("b8","c6",chessBoard));
 
 
 }
