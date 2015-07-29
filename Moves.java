@@ -63,7 +63,7 @@ public class Moves {
             end=temp;
         }
 
-        while (start.charAt(0)<end.charAt(0)) {
+        while (start.charAt(0) < (char)(end.charAt(0)-1)) {
 
             char P = (char) (start.charAt(0) + 1);
             start = P + "" + start.charAt(1);
@@ -90,9 +90,8 @@ public class Moves {
 
             ArrayList<String> Intermediate_Positions = findIntermediatePositions(start,end);
 
-
-           for (String position:Intermediate_Positions)
-           {
+           for (String position:Intermediate_Positions) {
+               System.out.println(position);
                if(ispawnpresent(position,ChessBoard))
                {
                    return false;
@@ -119,6 +118,7 @@ public class Moves {
 
     public static boolean isValidPawnMove(String start,String end,Map<String,String> ChessBoard){
 
+        //System.out.print(Math.abs(start.charAt(0)-end.charAt(0)));
         if ( Math.abs(start.charAt(0)-end.charAt(0)) > 1 )
         {
             return false;
@@ -140,27 +140,27 @@ public class Moves {
             if (Math.abs(start.charAt(0) - end.charAt(0)) == 0)
                 return true;
         }
-
+        //System.out.print(Math.abs(start.charAt(0)-end.charAt(0)));
             return false;
     }
 
     public static boolean ispawnpresent(String Position, Map<String,String> ChessBoard)
     {
-        /*
+
         if ( ChessBoard.containsValue(Position))
         {
             return true;
         }
         return false;
-        */
-        return true;
+
+       //return true;
     }
 
     public static void main(String args[]) {
         Map<String,String> chessBoard = new HashMap<String,String>();
 
 
-            chessBoard.put("Rw1","a1");
+            chessBoard.put("Rw1", "a1");
             chessBoard.put("Nw1","b1");
             chessBoard.put("Bw1","c1");
             chessBoard.put("Qw","d1");
@@ -168,7 +168,7 @@ public class Moves {
             chessBoard.put("Bw2","f1");
             chessBoard.put("Nw2","g1");
             chessBoard.put("Rw2","h1");
-            chessBoard.put("Pw1","a2");
+            chessBoard.put("Pw1","b3");
             chessBoard.put("Pw2","b2");
             chessBoard.put("Pw3","c2");
             chessBoard.put("Pw4","d2");
@@ -194,7 +194,7 @@ public class Moves {
             chessBoard.put("Pb7","g7");
             chessBoard.put("Pb8","h7");
 
-        System.out.print(isValidPawnMove("b2","b3",chessBoard));
+        System.out.print(isvalidRookMove("f5","a5",chessBoard));
 
 
 }
