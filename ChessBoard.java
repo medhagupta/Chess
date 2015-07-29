@@ -92,6 +92,21 @@ public class ChessBoard {
 			
 		}*/
 		
+		private String resolveConflicts(String finalPosition , char colour){
+			
+				for(int i=1;i<=2;i++){
+					String key = finalPosition.substring(2, 4)+colour+Integer.toString(i);
+					String rowOrColumn = finalPosition.substring(1, 2);
+					String position = chessBoard.get(key);
+					if(position.contains(rowOrColumn)){
+						return position;
+					}
+					
+				}
+			
+				return null;
+		}
+		
 		private void kingSideCasling(char colour){
 				String keyKing = "K"+colour;
 				String keyRook = "R"+colour+"2";
@@ -149,6 +164,10 @@ public class ChessBoard {
 		
 			
 			else{
+				if(finalPosition.length()>3){
+					String initialPosition = resolveConflicts(finalPosition,colour);
+				}
+				else{
 				String initialPosition = findInitialPosition(finalPosition,colour);
 				boolean isPawn = finalPosition.length()==2;
 				String position;
@@ -189,7 +208,7 @@ public class ChessBoard {
 				
 				}
 			
-				
+				}
 				
 			}
 		}
@@ -214,7 +233,7 @@ public class ChessBoard {
 				for(int i=1;i<9;i++){
 					piece = "P"+Colour+Integer.toString(i);
 					position = chessBoard.get(piece);
-					if(Moves.isValidPawnMove(position,finalPosition.substring(1),chessBoard)){
+					if(Moves.isValidPawnMove(position,finalPosition,chessBoard)){
 						return position;
 					}
 				}	
@@ -258,6 +277,8 @@ public class ChessBoard {
 			
 			return null;
 		}
+		
+		
 		
 		
 		
