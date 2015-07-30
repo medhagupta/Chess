@@ -71,31 +71,19 @@ public class ChessBoard {
 				String pieceToKill = findPieceAtPosition(finalPosition.substring(2,4));
 				chessBoard.put(pieceToKill, "deleted");
 				String initialPosition = findInitialPosition(finalPosition,colour);
+				System.out.println("999999999999999999 "+initialPosition);
 				String pieceToBeMoved = findPieceAtPosition(initialPosition);
 				chessBoard.put(pieceToBeMoved, finalPosition.substring(2, 4));
 			}
 			
 		}
 		
-		/*private void birth(String finalPosition,char colour){
-			String position = finalPosition.substring(0, 2);
-			String positionOfPawn ="";
-			if(colour == 'w'){
-				positionOfPawn = position.substring(0, 1) + Integer.toString(Integer.parseInt(position.substring(1, 2))-1);
-			}
-			else{
-				positionOfPawn = position.substring(0, 1) + Integer.toString(Integer.parseInt(position.substring(1, 2))+1);
-			}
-			String piece = findPieceAtPosition(positionOfPawn);
-			String 
-			chessBoard.put(piece, position)
-			
-		}*/
+		
 		
 		private String resolveConflicts(String finalPosition , char colour){
-			
+				System.out.println("$$$$$$$$$"+ " "+finalPosition);
 				for(int i=1;i<=2;i++){
-					String key = finalPosition.substring(2, 4)+colour+Integer.toString(i);
+					String key = finalPosition.substring(0,1)+colour+Integer.toString(i);
 					String rowOrColumn = finalPosition.substring(1, 2);
 					String position = chessBoard.get(key);
 					if(position.contains(rowOrColumn)){
@@ -164,14 +152,17 @@ public class ChessBoard {
 		
 			
 			else{
+				String initialPosition="";
 				if(finalPosition.length()>3){
-					String initialPosition = resolveConflicts(finalPosition,colour);
+					 initialPosition = resolveConflicts(finalPosition,colour);
+					// System.out.println("initialPosition");
 				}
 				else{
-				String initialPosition = findInitialPosition(finalPosition,colour);
+					initialPosition = findInitialPosition(finalPosition,colour);
+				}
 				boolean isPawn = finalPosition.length()==2;
-				String position;
-				String piece;
+				String position="";
+				String piece="";
 				if(isPawn){
 					for(int i=1;i<=8;i++){
 						if(colour=='w'){
@@ -190,6 +181,17 @@ public class ChessBoard {
 					}
 				}
 				else{
+					
+					if(finalPosition.contains("Q")||finalPosition.contains("K")){
+						piece = Character.toString(finalPosition.charAt(0))+colour;
+						position = chessBoard.get(piece);
+						
+					
+					
+						chessBoard.put(piece,finalPosition.substring(finalPosition.length()-2));
+					}
+				
+				else{
 					for(int i=1;i<=2;i++){ 
 						if(colour == 'w'){
 							piece = Character.toString(finalPosition.charAt(0))+"w" + Integer.toString(i);
@@ -201,22 +203,49 @@ public class ChessBoard {
 						}
 						
 						if(position!=null && position==initialPosition){
-							chessBoard.put(piece,finalPosition.substring(1));
+							chessBoard.put(piece,finalPosition.substring(finalPosition.length()-2));
 						}
 					}
-				
+				}
 				
 				}
 			
 				}
 				
-			}
 		}
 		
+		
 		public  void print(){
+			String[][] board = new String[8][8];
+			
+			
+			
 			for(Entry<String,String> e : chessBoard.entrySet()){
-				System.out.println(e.getKey() + "  "+e.getValue());
+				int index[] = new int[2];
+				if(!e.getValue().contains("deleted")){
+					index = valueToIndex(e.getValue());
+					board[index[0]][index[1]] = e.getKey();
+				}
+				
 			}
+			
+			for(int j=7;j>=0;j--){
+				for(int i=0;i<8;i++){
+					if(board[i][j]!=null)
+						System.out.print(board[i][j]+"  ");
+					else
+						System.out.print("___  ");
+				}
+				System.out.println("");
+			}
+			
+		}
+		
+		private int[] valueToIndex(String value){
+			int index[] = new int[2];
+			index[0] = value.charAt(0)-'a';
+			index[1] = value.charAt(1)-'1';
+			return index;
 		}
 		
 		private String findInitialPosition(String finalPosition,char Colour){
@@ -240,39 +269,41 @@ public class ChessBoard {
 			}
 			
 			else {
-				for(int i =1; i<=2;i++){
-					piece = Character.toString(finalPosition.charAt(0))+Character.toString(Colour) + Integer.toString(i);
-					position = chessBoard.get(piece);
-					if(isBishop && Moves.isValidBishopMove(position, finalPosition.substring(1),chessBoard)){
-						return position;
-					}
-					if(isKnight && Moves.isValidKnightMove(position, finalPosition.substring(1),chessBoard)){
-						return position;
-					}
-					if(isRook && Moves.isValidRookMove(position, finalPosition.substring(1),chessBoard)){
-						return position;
-					}
-					
-					if(isKing && Moves.isValidKingMove(position,finalPosition.substring(1),chessBoard)){
-						return position;
-					}
-					
-				}
-				
+				int end = finalPosition.length();
 				if(isQueen ){
 					piece = Character.toString(finalPosition.charAt(0)) + Colour;
 					position = chessBoard.get(piece);
-					if(Moves.isValidQueenMove(position, finalPosition.substring(1),chessBoard)){
+					if(Moves.isValidQueenMove(position, finalPosition.substring(end-2,end),chessBoard)){
 						return position;
 					}
 				}
 				if(isKing){
 					piece = Character.toString(finalPosition.charAt(0)) + Colour;
 					position = chessBoard.get(piece);
-					if(Moves.isValidKingMove(position, finalPosition.substring(1),chessBoard)){
+					if(Moves.isValidKingMove(position, finalPosition.substring(end-2,end),chessBoard)){
 						return position;
 					}
 				}
+				for(int i =1; i<=2;i++){
+					piece = Character.toString(finalPosition.charAt(0))+Character.toString(Colour) + Integer.toString(i);
+					position = chessBoard.get(piece);
+					if(isBishop && Moves.isValidBishopMove(position, finalPosition.substring(end-2,end),chessBoard)){
+						return position;
+					}
+					if(isKnight && Moves.isValidKnightMove(position, finalPosition.substring(end-2,end),chessBoard)){
+						return position;
+					}
+					if(isRook && Moves.isValidRookMove(position, finalPosition.substring(end-2,end),chessBoard)){
+						return position;
+					}
+					
+					if(isKing && Moves.isValidKingMove(position,finalPosition.substring(end-2,end),chessBoard)){
+						return position;
+					}
+					
+				}
+				
+				
 			}
 			
 			return null;
